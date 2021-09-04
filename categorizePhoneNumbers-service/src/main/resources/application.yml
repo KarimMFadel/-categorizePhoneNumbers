@@ -1,0 +1,24 @@
+
+server:
+  port: 8080
+  servlet:
+    context-path: /countryphonenumbers/rest/
+ 
+
+logging:
+  level: 
+    root: info
+    
+spring:
+  application:
+    name: categorizePhoneNumbers-service
+  datasource:
+    url: jdbc:sqlite:sample.db
+    driver-class-name: org.sqlite.JDBC
+    username: admin
+    password: admin
+  jpa:
+    database-platform: com.tornado.categorizePhoneNumbers.general.configuration.SqlLiteDialect
+  #  database: POSTGRESQL
+    hibernate:
+      ddl-auto: none
