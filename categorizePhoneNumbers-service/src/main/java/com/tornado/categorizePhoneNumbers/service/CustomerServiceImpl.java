@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import com.tornado.categorizePhoneNumbers.dto.Country;
@@ -30,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public ResponcePhoneNumbers GetAllPhoneNumbers(int page, int size) {
 		LOG.info("Retrieve the all customer information"); 
-		Pageable paging = PageRequest.of(page, size, Sort.by("phone"));
+		Pageable paging = PageRequest.of(page, size, Sort.by(Order.asc("phone")));
 		Page<Customer> pageResult = customerRepository.findAll(paging);
 		
 		return ResponcePhoneNumbers.builder()
@@ -42,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
 	private List<PhoneNumberDto> mapCustomersToPhoneNumberDto(List<Customer> customers) {
 		List<PhoneNumberDto> phoneNumberDtos = new ArrayList<>();
 		List<Country>  Countries = Arrays.asList(Country.values());
-		customers.forEach(customer->{
+		customers.forEach(customer -> {
 			String[] splited = customer.getPhone().split("\\s+");
 			String number = splited[1];
 			Country country = Countries.stream()

@@ -3,6 +3,8 @@ package com.tornado.categorizePhoneNumbers.dto;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+import lombok.Getter;
+
 public enum Country {
 
 	Cameroon("Cameroon", "237", countryCode->countryCode.contains("237"), Pattern.compile("[2368]\\d{7,8}$") ),
@@ -11,9 +13,13 @@ public enum Country {
 	Mozambique("Mozambique", "258", countryCode->countryCode.contains("258"), Pattern.compile("[28]\\d{7,8}$") ),
 	Uganda("Uganda", "256", countryCode->countryCode.contains("256"), Pattern.compile("\\d{9}$") );
 	
+    @Getter
 	private String name;
+    @Getter
     private String code;
+    @Getter
 	private Predicate<String> condition;
+    @Getter
 	private Pattern pattern;
 	
 	Country(String name, String code, Predicate<String> condition, Pattern pattern) {
@@ -23,60 +29,4 @@ public enum Country {
 		this.pattern = pattern;
 	}
 	
-    /**
-     * @return String return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return String return the condition
-     */
-    public Predicate<String> getCondition() {
-        return condition;
-    }
-
-    /**
-     * @param condition the condition to set
-     */
-    public void setCondition(Predicate<String> condition) {
-        this.condition = condition;
-    }
-
-    /**
-     * @return Pattern return the pattern
-     */
-    public Pattern getPattern() {
-        return pattern;
-    }
-
-    /**
-     * @param pattern the pattern to set
-     */
-    public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
-    }
-
-    /**
-     * @return String return the code
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * @param code the code to set
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
 }
