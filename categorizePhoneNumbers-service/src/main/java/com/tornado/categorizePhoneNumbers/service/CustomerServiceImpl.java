@@ -33,22 +33,25 @@ public class CustomerServiceImpl implements CustomerService {
 		Pageable paging = PageRequest.of(page, size, Sort.by("phone"));
 		Page<Customer> pageResult = customerRepository.findAll(paging);
 		
-		return new ResponcePhoneNumbers(pageResult.getTotalPages(), 
-					mapCustomersToPhoneNumberDto(pageResult.getContent()));
+		return ResponcePhoneNumbers.builder()
+					.totalPages(pageResult.getTotalPages())
+					.phoneNumbers(mapCustomersToPhoneNumberDto(pageResult.getContent()))
+					.build();
 	}
 
 	private List<PhoneNumberDto> mapCustomersToPhoneNumberDto(List<Customer> customers) {
 		List<PhoneNumberDto> phoneNumberDtos = new ArrayList<>();
 		List<Country>  Countries = Arrays.asList(Country.values());
 		customers.forEach(customer->{
-			String phoneNumber = customer.getPhone();
-			String[] splited = phoneNumber.split("\\s+");
+			String[] splited = customer.getPhone().split("\\s+");
 			String number = splited[1];
 			Country country = Countries.stream()
 				.filter(coun->coun.getCondition().test(splited[0]))
 				.findAny().orElse(null);
-			if(country == null)
+			if(country == null) {
+				LOG.info("There is a not valid Customer phoneNumber with id : " + customer.getId()); 
 				return ;
+			}
 			PhoneNumberDto numberDto = new PhoneNumberDto(country.getCode(), country.getName(), number,
 				country.getPattern().matcher(number).matches());
 			

@@ -16,7 +16,7 @@ public enum Country {
 	private Predicate<String> condition;
 	private Pattern pattern;
 	
-	Country(String name, String code, Predicate<String> condition, Pattern pattern ) {
+	Country(String name, String code, Predicate<String> condition, Pattern pattern) {
 		this.name = name;
         this.code = code;
 		this.condition = condition;
